@@ -1,0 +1,68 @@
+terminal
+    "mkdir project_name"
+    "cd project_name"
+    "code ."        open project in VScode
+create dist folder
+    folder incl files such as html, css, js, etc
+create index.html file in dist folder
+    type ! and enter tab to autocomplete HTML file
+create scss folder
+    work on sass workflow
+    incl sass files
+create main.scss file
+    main sass file 
+    every other sass file will be partials that we import into this file
+node-sass
+    need a way for our sass to be compiled into regular css because the browser doesnt read scss
+    uses LibSass, the C version of the popular stylesheet preprocessor, very fast
+    use npm to install node-sass => "npm install node-sass"
+    before we install; need to create a package.json file; which is like a manifest for our project
+
+    open terminal (ctrl + `); type "npm init"; follow steps
+    anything installed throught npm will be put in the package.json file
+
+    type "npm i node-sass" to install
+        i = install;
+
+Sass setup
+    uses npm script 
+    TEST
+        change "test" script in package.json file
+        from:   "scripts": {
+                    "test": "echo \"Error: no test specified\" && exit 1"
+                }
+
+        to:     "sass": "echo \"Hello from sass script\""
+        To run script open terminal type "npm run sass"
+
+    "sass": "node-sass -w scss/ -o dist/css/ --recursive"
+        node-sass       run node-sass
+        -w scss/        watch the scss folder
+        -o dist/css     output the compiled css file to dist/css/ (dont have to create dist/css/ folder) 
+        --recursive     will have issues with partials and auto reload without recursive flag
+    Terminal: npm run sass
+
+main.sccs
+    $primary-colour
+        variables start with $
+    dont touch main.css file that sass created
+        work with main.scss file for styling with css
+    Incl compiled version (main.css not main.scss) in the index.html file
+        <link rel="stylesheet" href="css/main.css">
+
+git repository
+    open new terminal (+) and keep the npm terminal open
+    create a file called .gitignore 
+        touch .gitignore
+            touch command creates a file
+        windows powershell use "ni .gitignore"
+            new-item .gitignore
+    add "node-modules" to .gitignore file
+        tells git to ignore node-modules folder
+            no need to alter folder or upload to git
+                node dependencies
+    init git repository
+        terminal: git init
+            creates hidden .git folder
+    git add .
+        add . => add all files (. => all) 
