@@ -64,5 +64,179 @@ git repository
     init git repository
         terminal: git init
             creates hidden .git folder
-    git add .
+    terminal: git add .
         add . => add all files (. => all) 
+    terminal: git commit -m 'Initial workflow setup'
+        -m message/comment flag ??
+
+PART 2: Homepage & Sass
+
+homepage html markup
+    HTML5 header tag
+        menu
+        overlay
+    emmet ??
+        btn-line*3  
+
+    shift + alt + down
+        copy lines down
+    
+    HTML5 main tag
+        lg-heading = large heading
+        sm-heading = small "
+    fontawesome ??
+
+    link to javascript in index.html file
+
+core css    
+    * {}
+        box-sizing: border-box;
+            border-box: padding on the inside doesnt effect width/height, be within the box model ??
+    body {}
+        height: 100%;
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+        line-height: 1.5;
+            space between lines
+
+    Headings:
+    h1, h2, h3 {}
+        margin: 0;
+        font-weight: 400;
+            font letter thickness
+        sass nesting ??
+            &.lg-heading {}
+                font-size: 6rem;
+                    rem => multiplier of default (16px)
+                        change default rem size 
+                            html {font-size: 10px;}
+                    6rem = 6 * 16 = 96px
+            &.sm-heading {}
+                margin-bottom:2rem;
+                padding: 0.2rem 1rem;
+                background: rbga(lighten($primary-colour, 2) 0.5);
+                    sass lighten() func ??
+                        2 param
+                            primary colour
+                            how much to lighten by
+                    sass rbga() func
+                        make transparent
+                        2 param
+                            colour
+                            opacity
+
+    links
+        a {}
+            color: #fff;
+                make colour white
+            text-decoration: none
+                remove links underline
+
+    header
+        header {}
+            position: fixed
+                always stay at top
+            z-index: 2;
+                always at front
+            width: 100%
+                streches across whole screen
+
+    text-secondary
+        create sass var
+            $secondary-colour: #eece1a;
+                yellow colour
+        text-secondary {}
+            color: $secondary-colour;
+
+    main
+        main {}
+            padding: 4rem;
+            height: 100%;
+            nested sass: style icons
+                .icons {}
+                    margin-top: 1rem;
+                        push down
+                    nested sass: link
+                        a {}
+                            padding: 0.4rem;
+                            nested sass: a hover
+                                &:hover {}
+                                    color: $secondary-colour;
+
+CSS transitions
+    transition: all 1s ease-out; ??
+        all: what to transition e.g. colour
+        1s: time it takes
+        ease out: motion
+
+    sass @mixin
+        like func
+            put at top
+        @mixin easeOut {
+            transition: all 1s ease-out;
+        }
+        to use
+            @include nameOfMixin();
+                e.g. @include easeOut();
+
+homepage: id=homepage
+    main {} nested  
+        &#home {}
+            overflow: hidden;
+                no scroll bars
+            nested h1
+                h1 {}
+                    margin-top: 20vh;
+                        vh = viewpoint height
+                            20vh = 20 out of the 100 slices the screen divided into
+                            vw = similar
+    create sass var
+        $show-home-image = true;
+        $home-image: url(.../img/background.jpg);
+            create new folder in dist folder called img
+                need
+                    background.jpg
+                    portrait
+                    portrait-small
+                    projects
+        $background-opacity: 0.9;
+
+    background image
+        @mixin background {}
+            @if $show-home-image {}
+                &#bg-img {}
+                    background: $home-image;
+                    background-attachment: fixed; ??
+                    background-size: cover;
+                    METHOD1:    overlay
+                        HTML: create overlay div at top body
+                        .overlay {} //cover entire body
+                            position: absolute;
+                            top:0;
+                            right:0;
+                            width:100%;
+                            height:100%;
+                            z-index:-1;
+                            background: rgba($primary-colour, $background-opacity);
+                    METHOD2
+                        pseudo-element after
+                        &:after {}
+                            content:''; // :before/:after need content but can leave empty ''
+                            position: absolute;
+                            top:0;
+                            right:0;
+                            width:100%;
+                            height:100%;
+                            z-index:-1;
+                            background: rgba($primary-colour, $background-opacity);
+        body {}
+            @include background; //dont need parenthasies ??
+
+create partial scss file for @mixin functions
+    all partials should start with underscore _
+    create file called _config.scss
+    move all $var and @mixin func to _config.scss
+    import config into main scss file   
+        @import 'config';
+            no underscore _
+            no filetype scss
