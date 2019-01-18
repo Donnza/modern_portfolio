@@ -248,3 +248,123 @@ PART 3: Rotating Menu Button
 git
     git add .
     git commit -m 'Index markup & main sass'
+
+Menu
+    create new sass file
+        _menu.scss
+    import _menu.scss into main.scss file   
+        @import 'menu';
+            after config
+    
+    _menu
+        //Menu Button
+        .menu-btn {}
+            position: absolute;
+                want to place where we want it to be in the corner
+            z-index: 3;
+                upfront, close
+            right: 35px;
+            top: 35px;
+            cursor: pointer;
+                hover over it => we want a cursor
+            @include easeOut;
+                css transition
+
+            //btn lines
+            btn-line {}     //only one line
+                width: 28px;
+                height: 3px;
+                margin: 0 0 5px 0;
+                    //top right bottom left
+                    //space in between lines
+                background: #fff;       //white
+                @include easeOut;       //css transition
+
+        JavaScript
+        //when menu btn clicked add close class to menu-btn and show class to nav elements
+        //main.js
+            //select items from the DOM ??
+            //Document Object model => UI Structure, HTML tags, attributes, etc
+
+            //menu btn, menu overlay, nav list, nav items, branding
+            //DOM Selection
+
+                //Select DOM Items
+                const menuBtn = document.querySelector('.menu-btn');
+                    //document property ??
+                    //.querySelector('.btn-menu') => select the class btn-menu
+                const menu = document.querySelector('.menu');
+                const menuNav = document.querySelector('.menu-nav');
+                const menuBranding = document.querySelector('.menu-branding');
+
+                //nav items
+                    //more than one so cant use querySelector, will just grab the first one
+                    //use querySelectorAll
+                        //will take all those items and put them in a node list similar to array
+
+                const navItems = document.querySelectorAll('.nav-item');
+
+                // Set initial state of menu
+                let showMenu = false;
+                    //let => directly reassign var at certian times cant do that with const
+                //need event listner, listen for click event
+                menuBtn.addEventListener('click', toggleMenu);
+                    'click' :   event to listen for
+                    toggleMenu  :   function we need to write
+
+                function toggleMenu() {
+                    //check the state of show menu
+                    if (!showMenu) {
+                        //if menu is not shown, overlay, add classes to items
+                        menuBtn.classList.add('close');
+                        menu.classList.add('show');
+                        menuNav.classList.add('show');
+                        menuBranding.classList.add('show');
+
+                        //navItems has more than one item so have to loop through them
+                        navItems.forEach(item => item.classList.add("show"));
+                            //item represents each item in the navItems obj
+
+                        // Set Menu State
+                        showMenu = true;
+                    } else {
+                        //do opposite of if above
+                        //VScode shortcut: select add, ctrl + d * 3 to select all add and change to remove
+                        menuBtn.classList.remove("close");
+                        menu.classList.remove("show");
+                        menuNav.classList.remove("show");
+                        menuBranding.classList.remove("show");
+                        navItems.forEach(item => item.classList.remove("show"));
+
+                        // Set Menu State
+                        showMenu = false;
+                    }
+                }
+        
+        //  _menu.scss
+        .menu-btn {} 
+            //  Rotate Into X With Menu Lines
+            &.close {}
+                transform: rotate(180deg);
+                
+                //hide line and turn rest into X
+                .btn-line {}
+                    //  Line 1 - Rotate
+                    &:nth-child(1) {}
+                        // want the first line
+                        // use translate and transform to change line
+                        transform: rotate(45deg) translate(5px, 5px);
+
+                    //  Line 2 - Hide
+                    &:nth-child(2) {}
+                        opacity: 0;
+
+                    //  Line 3 - Rotate
+                    &:nth-child(3) {}
+                        transform: rotate(-45deg) translate(7px, -6px);
+
+git
+    git add .
+    git commit -m 'Menu button, javascript & rotate'
+
+    ctrl + L to clear terminal
