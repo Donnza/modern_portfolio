@@ -490,3 +490,87 @@ _menu.scss
         .nav-link {}
             &:hover {}
                 color: $secondary-colour;       //  change link colour on hover
+
+Responsiveness
+_config.scss
+    //  Media Query Mixins
+    @mixin mediaSm {}
+        @media screen and (max-width: 500px) {}     //  Will only apply if screen 500px or less
+            @content;
+
+    @mixin mediaMd {}
+        @media screen and (max-width: 768px) {}
+            @content;
+
+    @mixin mediaLg {}
+        @media screen and (min-width: 769px) and (max-width: 1170px) {}
+            @content;
+
+    @mixin mediaXl {}
+        @media screen and (min-width: 1171px) {}
+            @content;
+
+Create new file called _mobile.scss
+    @import "mobile";       //  import _mobile into main.scss
+    restart npm sass;   ctrl + c to terminate
+
+    _mobile.scss
+        //  Widescreens
+        @include mediaXl {}
+
+        //  Desktop & Laptops
+        @include mediaLg {}
+            
+        //  Tablets & Small Laptops
+        @include mediaMd {}
+            main {}
+                align-items: center;
+                text-align: center;
+
+                .lg-heading {}
+                    line-height: 1;
+                    margin-bottom: 1rem;
+        
+        //  Smartphones
+        @include mediaSm {}
+
+    @include mediaMd {}
+        main {}
+            align-items: center;
+            text-align: center;
+
+            .lg-heading {}
+                line-height: 1;
+                margin-bottom: 1rem;
+
+    @include mediaSm {}
+        main#home h1 {}
+            margin-top: 10vh;
+
+    
+    @include mediaMd {}
+        ul.menu-nav, div.menu-branding {}
+            float: none;
+            width: 100%;
+            min-height: 0;
+
+            &.show {}
+                transform: translate3d(0, 0, 0);
+
+        .menu-nav {}
+            height: 75vh;
+            transform: translate3d(-100%, 0, 0);        //  Make it go off screen left/right
+            font-size: 24px;
+
+        .menu-branding {}
+            height: 25vh;
+            transform: translate3d(100%, 0, 0);
+
+            .portrait {
+                background: url("../img/portrait_small.jpg");
+                width: 150px;
+                height: 150px;
+
+git
+    git add .
+    git commit -m 'Added media queries and made menu overlay responsive'
