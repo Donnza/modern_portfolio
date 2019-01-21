@@ -368,3 +368,125 @@ git
     git commit -m 'Menu button, javascript & rotate'
 
     ctrl + L to clear terminal
+
+YouTube comment
+
+        You can write the toggleMenu function much simpler using classList's toggle method: 
+        function toggleMenu() {
+            menuBtn.classList.toggle('close');
+            menu.classList.toggle('show');
+            menuNav.classList.toggle('show');
+            menuBranding.classList.toggle('show');
+            navItems.forEach(item => item.classList.toggle('show'));
+            showMenu = !showMenu;
+        }
+
+        I just had to make the rotation menu button stay in the same place and tinkered a bit.  
+        First you need to make the menu-btn box properly square by removing the bottom padding on the 3:rd line.
+        in _menu.scss at the end of .btn-line add: &:nth-child(3) { margin: 0; };
+        Then change the line 1 transform to:  transform: translate(0px, 8px) rotate(45deg);
+        And the Line 3 transform to:  transform: translate(0px, -8px) rotate(-45deg);
+
+        This will make the menu button rotate around its own center,  
+
+PART 4: Menu Overlay & Responsiveness
+
+Menu Overlay
+_menu.scss
+
+    //  Menu Overlay
+    .menu {}
+        position: fixed;
+        top: 0;
+        width: 100%;
+        opacity: 0.9;
+        visibility: hidden;
+
+        //When menu clicked visibility:show
+        &.show {}
+            visibility: visable;
+
+        //branding & nav
+        //&-branding {}       //same as &menu-branding {} but because its nested in menu {} can omit menu
+        &-branding, &-nav {}
+            display: flex;
+                display as flex ??
+                make it into a column
+            flex-flow: column wrap;
+                going up and down aposed to right and left      ??
+            align-items: center;
+            justify-content: center;
+                align both horizontally and vertically to the center
+            float: left;
+            width: 50%;     
+            height: 100vh;
+                100 slices   
+            overflow: hidden;
+                no scrollbars
+
+        &-nav {}
+            margin: 0;
+            padding: 0;
+            background: darken($primary-colour, 5); 
+            list-style: none;       //remove link bullet points
+            transform: translate3d(0, -100%, 0);
+                take off the page
+                put it at the top before it slides down
+            @include easeOut;       //transition down
+
+            &.show {}
+                transform: translate3d(0, 0, 0);        //  Slide in from top
+
+        //  Branding Side
+        &-branding {}
+            background: $primary-colour;
+            transform: translate3d(0, 100%, 0);
+            @include easeOut;
+
+            &.show {}
+                transform: translate3d(0, 0, 0);        //  Slide in from bottom
+
+            .portrait {
+                width: 250px;
+                height: 250px;
+                background: url("../img/portrait.jpg");
+                border-radius: 50%;     //make it a circle
+                border: solid 3px $secondary-colour;        //give it a border
+
+        .nav-item {}
+            transform: translate3d(600px, 0, 0);        //moving left/right
+            @include easeOut;
+
+            &.show {}
+                transform: translate3d(0, 0, 0);        //  Slide in from right
+
+    //Sass for loop
+    //  Delay each nav item slide by 0.1s
+    @for $x from 1 through 4 {}
+        .nav-item:nth-child(#{$x}) {}      //have towrap $x var in #{}; temp literal
+            transition-delay: $x * 0.1s; 
+
+    .menu {}
+        .nav-link {}
+            display: inline-block;
+            position: relative;
+            font-size: 30px;
+            text-transform: uppercase;
+            padding: 1rem 0;
+            font-weight: 300;
+            color: #fff;
+            text-decoration: none;
+            @include easeOut;
+
+index.html
+    //  Add class current to home link
+        <li class="nav-item current"><a href="/" class="nav-link"> Home </a></li>
+
+_menu.scss
+    .menu {}
+        .nav-item {}
+            &.current < a {}
+                color: $secondary-colour;       //  make current page in nav menu secondary colour
+        .nav-link {}
+            &:hover {}
+                color: $secondary-colour;       //  change link colour on hover
