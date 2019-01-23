@@ -574,3 +574,174 @@ Create new file called _mobile.scss
 git
     git add .
     git commit -m 'Added media queries and made menu overlay responsive'
+
+YouTube Comments
+
+    #1
+        The portrait is transparent, allowing the text behind it to be visible, because the whole .menu is given transparency.
+
+        Remove this:
+        .menu {
+            opacity: 0.9;
+        }
+
+        and change the background colors of .menu-branding and .menu-nav to use rgba instead of just the hex codes:
+        .menu {
+            &-nav {
+                background: rgba(darken($primary-color, 5), 0.9);
+            }
+            &-branding{
+                background: rgba($primary-color, 0.9);
+            }
+        }
+
+        Now only the menu backgrounds will be transparent, and not its content.
+
+    #2
+        So if your name is longer than John Doe I recommend you to make font-size smaller inside mediaSm :D
+
+PART 5: About Page With CSS Grid
+
+create function to set text colour
+    not mixin because want a colour returned
+    Sass _config: @function set-text-colour($colour) {
+        @if (lightness($colour) > 40) {
+            @return #000;
+        } @else {
+            @return #fff;
+        }
+    }
+
+    main.scss
+        body {}
+            color: set-text-colour($primary-colour);
+
+    _menu
+        .menu-btn {}
+            .btn-line {}
+                background: set-text-colour($primary-colour);
+
+        .menu {}
+            .nav-link {}
+                color: set-text-colour($primary-colour);
+
+Create About Page
+    dist/about.html
+
+    index.html
+    //remove '/' in front of href links
+        nav.menu
+            <a href="/about.html" class="nav-link"> About Me </a>
+            <a href="about.html"...
+            .
+            .
+            .
+            <a href="contact.html"
+
+    about.html
+        Copy all content from index.html and paste in to about.html
+        change title
+            <title>About Me</title>
+        change menu nav current class from home to about me
+            <li class="nav-item current">
+        change main id
+            <main id="about">
+        h1.lg-heading
+            <h1 class="lg-heading">About <span class="text-secondary">Me</span></h1>
+        h2.sm-heading
+            <h2 class="sm-heading">Let me tell you a few things..</h2>
+        remove div.icons and content
+        Add footer
+            <footer id="main-footer">Copyright &copy; 2019</footer>
+        Add div.about-info; div that grid applies to; grid item
+            <div class="about-info"></div>
+                create img.bio-image
+                    <img src="img/portrait.jpg" alt="Donovan Duffey" class="bio-image">
+                create div.bio
+                    <div class="bio"></div>
+                        create h3.text-secondary
+                            <h3 class="text-secondary">BIO</h3>
+                        create <p></p>
+                            emmet: lorem30
+                create div job-1
+                    .job.job-1
+                    <div class="job jop-1"></div>
+                        <h3>123 Workshop</h3>
+                        <h6>Full Stack Developer</h6>
+                        <p>lorem20</p>
+                copy job-1 *2; job-1, job-2, job-3;
+        Remove id="bg-img" from body
+            <body>
+
+    _main.scss
+        align items using grid css
+        using grid templates, map out dif areas and where we want them displayed
+
+        .about-info {}
+            display: grid;
+            grid-template-areas:            // visual rep of what you want to display
+                'bioimage bio bio'          // bioimage and then stretch bio across 2
+                'job1 job2 job3';
+            grid-template-columns: repeat(3, 1fr);        //define grid template columns; "1fr 1fr 1fr;" OR "repeat(3, 1fr)"
+            grid-gap: 30px;     // spacing
+
+        //create grid areas
+        .bio-image {}
+            grid-area: bioimage;
+        .bio {}
+            grid-area: bio;
+        .job-1 {}
+            grid-area: job1;
+        .job-2 {}
+            grid-area: job2;
+        .job-3 {}   
+            grid-area: job3;
+
+        //style areas
+        .bio-image {}
+            margin: auto;
+            border-radius: 50%      // rounded; circle
+            border: $secondary-colour 3px solid;
+
+        .bio {}
+            font-size: 1.5rem;
+
+        .job {}
+            background: lighten($primary-colour, 5);
+            padding: 0.5rem;
+            border-bottom: $secondary-colour 5px solid;
+
+        //nest ".bio-image, .bio, .job-1, .job-2, .job-3, .job" in .about-info
+
+        //footer
+        #main-footer {}
+            text-align: center;
+            padding: 1rem;
+            background: darken($primary-colour, 10);
+            color: set-text-colour($primary-colour);
+            height: 60px;
+
+        //make footer stick to bottom, sticky footer
+        //use calc on the element before footer
+        main {}
+            min-height: calc(100vh - 60px);       // change height: 100%; 100vh - footer (60px)
+
+    //About Responsiveness
+    main.scss
+        move @import "mobile"; right to the bottom because you want it to run after all the css
+
+    _mobile.scss
+        @include mediaMd {}
+            .about-info {}
+                grid-template-areas:
+                "bioimage"
+                "bio"
+                "job1"
+                "job2"
+                "job3";
+                grid-template-columns: 1fr;
+
+git
+    git add .
+    git commit -m 'Text colour function & about page'
+

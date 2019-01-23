@@ -1,5 +1,5 @@
-$primary-colour: #444;
-$secondary-colour: #eece1a;
+$primary-colour: #444; //#444
+$secondary-colour: #eece1a; //#eece1a; #20eb96;
 $show-home-image: true;
 $home-image: url(../img/background.jpg);
 $background-opacity: 0.75;
@@ -27,6 +27,15 @@ $background-opacity: 0.75;
 
 @mixin easeOut {
   transition: all 0.5s ease-out;
+}
+
+//  Set Text Colour
+@function set-text-colour($colour) {
+  @if (lightness($colour) > 40) {
+    @return #000;
+  } @else {
+    @return #fff;
+  }
 }
 
 //  Media Query Mixins
