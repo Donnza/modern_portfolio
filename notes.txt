@@ -745,3 +745,96 @@ git
     git add .
     git commit -m 'Text colour function & about page'
 
+PART 6: Work & Contact Pages
+
+Create dist/work.html file
+    copy content from about.html to work.html
+    <title>View My Work</title>
+    change current nav class
+        <li class="nav-item current">
+    change main#id
+        <main id="work">
+    change lg-heading
+        <h1 class="lg-heading">My <span class="text-secondary">Work</span></h1>
+    change sm-heading
+        <h2 class="sm-heading">Check out some of my projects...</h2>
+    change div.about-info
+        <div class="projects">
+            remove everything inside div.projects
+            create div.item
+                <a href="#!"></a>
+                    <img src="img/projects/project1.jpg" alt="project">
+                <a href="#!" class="btn-light">     // a.btn-light
+                    <i class="fas fa-eye"></i> Project      // i.fas.fa-eye
+                <a href="#!" class="btn-dark">
+                    <i class="fab fa-github"></i> Github      // i.fas.fa-github
+            copy div.item paste 4 times (total 5)
+                change image of each
+
+main.scss
+    above #main-footer
+    // Work/Projects
+    .projects {}
+        display: grid;
+
+        img {}
+            width: 100%;    //make it 100% width inside its container
+
+        // want it to be 3fr accross by default
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 0.7rem;
+
+        img {}
+            border: 3px #fff solid;
+
+            &:hover {}
+                opacity: 0.5;
+                border-color: $secondary-colour;
+                @include easeOut;
+
+    Want to be able to use the button style any where not just in ptojects
+    Create default style and then extend them to light and dark
+    // Button Styles
+    .btn {}
+        display: block;      // on own line and go all the way accross
+        padding: 0.5rem 1rem;
+        border: 0;
+        margin-bottom: 0.3rem;
+
+        &:hover {}
+            background: $secondary-colour;
+            color: set-text-colour($secondary-colour);
+
+    extend the btn class to light and dark
+    .btn-dark {}
+        @extend .btn;
+        background: darken($primary-colour, 50);
+        color: #fff;
+
+    .btn-light {}
+        @extend .btn;
+        background: lighten($primary-colour, 50);
+        color: #333;
+
+Make responsive - show 4 projects on big screens, inbetween 3 - 2, and 1 on small
+_mobile.scss
+    start with mediaXl (widescreen) - want 4 items per row
+    @include mediaXl {}
+        .projects {}
+            grid-template-columns: repeat(4, 1fr);
+    
+    @include mediaLg {}
+        .projects {}
+            grid-template-columns: repeat(3, 1fr);
+
+    @include mediaMd {}
+        .projects {}
+            grid-template-columns: repeat(2, 1fr);
+
+    @include mediaSm {}
+        .projects {}
+            grid-template-columns: 1fr;
+
+git
+    git add .
+    git commit -m 'Work page and responsiveness'
