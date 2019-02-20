@@ -838,3 +838,97 @@ _mobile.scss
 git
     git add .
     git commit -m 'Work page and responsiveness'
+
+Create Contact Page
+    dist/contact.html
+
+    use flexbox for contact.html page to create boxes
+
+    copy about.html and paste in contact.html
+
+    <title>Contact Me</title>
+
+    Move current class
+    <li class="nav-item current">
+            <a href="contact.html" class="nav-link"> How To Reach Me </a>
+    </li>
+
+    Change id
+    <main id="contact">
+
+    <h1 class="lg-heading">Contact <span class="text-secondary">Me</span></h1>
+
+    <h2 class="sm-heading">This is how you can reach me...</h2>
+
+    Change <div class="about-info"> to <div class="boxes">
+    and delete everything inside.
+
+    <div class="boxes">
+        <div>
+            <span class="text-secondary">Email:</span> donovanduffey@gmail.com
+        </div>
+        <div>
+            <span class="text-secondary">Phone:</span> +27 76 528 4264
+        </div>
+        <div>
+            <span class="text-secondary">Address:</span> 333 Jeffery st, Boston MA 06969
+        </div>
+    </div>
+
+main.scss
+
+above // Button Styles
+// Contact page
+    .boxes {}
+        display: flex;
+        flex-wrap: wrap;    //when screen gets too big boxes gonna go over to next line
+        justify-content: space-evenly;  //space content evenly inbetween
+        align-items: center;
+        margin-top: 1rem;   //margin above the boxes
+
+        div {}
+            font-size: 2rem;
+            border: 3px #fff solid;
+            padding: 1.5rem 2.5rem;
+            margin-bottom: 3rem;
+            @include easeOut;
+
+            &:hover {}
+                padding: 0.5rem 1.5rem; //make the box smaller on hover
+                background: $secondary-colour;
+                color: set-text-colour($secondary-colour);
+
+                span {}
+                    color: set-text-colour($secondary-colour);
+
+change <a href="index.html" class="nav-link"> Home </a>
+on all .html pages
+
+git
+    git add .
+    git commit -m 'initial website finished'
+
+YouTube Comments
+
+Traversy Media
+Hey guys, Couple things to add to the "mediaSm" query in order for mobile screens to look right... 
+in _mobile.scss. Make the .main padding to 2rem and set the font size of the .lg-heading to 5rem. 
+Should look like this...
+
+@include mediaSm {
+  main {
+    padding: 2rem;
+    #home h1 {
+      margin-top: 10vh;
+    }
+
+    .lg-heading {
+      margin-top:1rem;
+      font-size: 5rem;
+    }
+  }
+
+  .projects {
+    grid-template-columns: 1fr;
+  }
+}
